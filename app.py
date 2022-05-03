@@ -23,6 +23,15 @@ class Usuario(db.Model):
     apellido = db.Column(db.String(), nullable=False)
     edad = db.Column(db.Integer, nullable=False)
     admin = db.Column(db.Boolean, default=False)
+
+    def __repr__(self):
+        return f'''email: {self.email},
+         usuario: {self.usuario},
+          contraseña: {self.contraseña},
+          nombre: {self.nombre},
+          apellido: {self.apellido},
+          edad: {self.edad},
+          admin: {self.admin}'''
     
 class Libro(db.Model):
     __tablename_ = 'libros'
