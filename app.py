@@ -1,17 +1,25 @@
-from flask import Flask, jsonify, redirect, render_template, request, url_for, abort
+#Imports
+from flask import (
+    Flask,
+    jsonify, 
+    redirect, 
+    render_template, 
+    request, 
+    url_for,
+    abort
+)
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+import sys
 
 # Configuration
-app = Flask('__name__')
+app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:1234@localhost:5432/proyectodb'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
 db = SQLAlchemy(app) # Instancia de SQLAlchemy
 migrate = Migrate(app, db) # Instancia de la aplicación + Instacia SQLAlchemy
 
 # Models
-
 class Usuario(db.Model):
     __tablename__ = 'usuarios'
     email = db.Column(db.String(), primary_key=True)
@@ -33,16 +41,16 @@ class Usuario(db.Model):
           
 class Libro(db.Model):
     __tablename_ = 'libros'
-    nombre = db.Column(db.String(80), primary_key=True)
-    fecha_publicacion = db.Column(db.String(80), nullable=False)
-    editorial = db.Column(db.String(80), nullable=False)
+    nombre = db.Column(db.String(), primary_key = True)
+    autor = db.Column(db.String(), nullable = False)
+    editorial = db.Column(db.String(), nullable = False)
+    año_publicacion = db.Column(db.Integer, nullable = False)
     nro_paginas = db.Column(db.Integer, nullable = False)
+    genero = db.Column(db.String(), nullable = False )
+    sinopsis = db.Column(db.String(), nullable = False)
 
     def __repr__(self):
-        return f'''nombre: {self.nombre},
-         fecha: {self.fecha_publicacion},
-          editorial: {self.editorial},
-          nro_paginas: {self.nro_paginas}'''
+        return f'nombre: {self.nombre}, autor: {self.autor}, editorial: {self.editorial}, año_publicacion: {self.año_publicacion}, nro_paginas: {self.nro_paginas}, genero: {self.genero}, sinopsis: {self.sinopsis}'
 
 class Autor(db.Model):
     __tablename__ = 'autores'
@@ -55,13 +63,17 @@ class Autor(db.Model):
          apellido: {self.apellido},
          apodo: {self.apodo}'''
 
-db.create_all()
+#db.create_all()
 
-# Controllers 
+#Controllers 
 
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/libro')
+def libro():
+    return render_template('libro.html')
 
 @app.route('/usuario/registrar', methods=['POST'])
 def registrar_usuario():
@@ -89,8 +101,32 @@ def registrar_usuario():
         db.session.close()
     return jsonify(respuesta)
 
-
-
+@app.route('/libro/registrar', methods=['POST'])
+def registrar_libro():
+    respuesta = {}
+    try:
+        nombre = request.get_json()['nombre']
+        autor = request.get_json()['autor']
+        editorial = request.get_json()['editorial']
+        año_publicacion = request.get_json()['año_publicacion']
+        nro_paginas = request.get_json()['nro_paginas']
+        genero = request.get_json()['genero']
+        sinopsis = request.get_json()['sinopsis']
+        libro = Libro(nombre=nombre,
+                    autor=autor,
+                    editorial=editorial,
+                    año_publicacion=año_publicacion,
+                    nro_paginas=nro_paginas,
+                    genero=genero,
+                    sinopsis=sinopsis)
+        db.session.add(libro)
+        db.session.commit()
+    except:
+        db.session.rollback()
+    finally:
+        db.session.close()
+    return jsonify(respuesta)
+    
 # Run
 if __name__ == '__main__':
     app.run(debug=True, port=5003)
