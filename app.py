@@ -28,26 +28,69 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 #models
+
 class Usuario(db.Model):
     __tablename__ = 'usuarios'
-    usuario = db.Column(db.String, primary_key=True)
-    nombre = db.Column(db.String(), nullable=False)
-    apellidos = db.Column(db.String(), nullable=False)
-    sexo = db.Column(db.String(), nullable=False)
-    fecha = db.Column(db.Date(), nullable=False)
-    pais = db.Column(db.String(), nullable=False)
-    password = db.Column(db.String(), nullable=False)
+    nombre_usuario = db.Column(db.String(), nullable=False)
+    apellido_usuario = db.Column(db.String(), nullable=False)
+    email = db.Column(db.String(), nullable=False)
+    usuario = db.Column(db.String(), primary_key=True)
+    contraseña = db.Column(db.String(), nullable=False)
+
     
     
+    def __repr__(self):
+        return f'''usuario: {self.usuario},
+        nombre: {self.nombre}, 
+        apellido_usuario: {self.apellido_usuario},
+        sexo: {self.sexo},
+        fecha: {self.fecha},
+        pais: {self.pais},
+        password: {self.password}'''
 
 
+class Autor(db.Model):
+    __tablename__ = 'autores'
+    nombre_autor = db.Column(db.String, primary_key=True, unique=True)
+    apellidos = db.Column(db.String, primary_key=True)
+    apodo = db.Column(db.String, nullable=False)
 
     def __repr__(self):
-        return f'Usuario: usuario={self.usuario}, nombre={self.nombre}'
+        return f'''nombre_autor={self.nombre_autor}, 
+        apellidos={self.apellidos}, 
+        apodo={self.apodo}'''
+
+class Genero(db.Model):
+    __tablename__='generos'
+    nombre_genero = db.Column(db.String, primary_key=True)
+
+    def _repr_(self):
+        return f'''nombre_genero: {self.nombre_genero}'''
+
+class Libro(db.Model):
+    __tablename__='libros'
+    nombre_libro = db.Column(db.String, primary_key=True)
+    autor = db.Column(db.String, db.ForeignKey('autores.nombre_autor'))
+    autores = db.relationship("Autor")
+    fecha_publicacion = db.Column(db.Date, nullable=False)
+    editorial = db.Column(db.String, nullable=False)
+    paginas = db.Column(db.Integer, nullable=False)
+    genero = db.Column(db.String, db.ForeignKey('generos.nombre_genero'))
+    generos = db.relationship("Genero")
+
+    def _repr_(self):
+        return f'''nombre_libro: {self.nombre_libro}, 
+        autor: {self.autor}, 
+        fecha_publicacion: {self.fecha_publicacion}, 
+        editorial: {self.editorial}, 
+        paginas: {self.paginas}''' 
+
+
+
 
 
 db.create_all()
-SQL_INSERT = 'insert into usuarios(usuario, nombre, apellidos, sexo, fecha, pais, password) values(%(usuario)s, %(nombre)s, %(apellidos)s, %(sexo)s, %(fecha)s, %(pais)s, %(password)s)'
+
 
 
 connection.commit()
@@ -57,27 +100,35 @@ connection.close()
 #controller
 @app.route('/')
 def index():
-    return render_template('index.html', usuarios=Usuario.query.order_by('nombre').all())
+    return render_template('index.html', usuarios=Usuario.query.order_by('nombre').all(), generos=Genero.query.order_by('nombre_genero').all())
 
-@app.route('/usuarios/create', methods=['POST'])
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
+@app.route('/registro')
+def registro():
+    return render_template('registro.html')
+
+@app.route('/usuario/create', methods=['POST'])
 def create_todo_post():
     error = False
     response = {}
     try:
         usuario = request.get_json()['usuario']
         nombre = request.get_json()['nombre']
-        apellidos = request.get_json()['apellidos']
+        apellido_usuario = request.get_json()['apellido_usuario']
         sexo = request.get_json()['sexo']
         fecha = request.get_json()['fecha']
         pais = request.get_json()['pais']
         password = request.get_json()['password']
 
-        todo = Todo(usuario=usuario, nombre=nombre, apellidos=apellidos, sexo=sexo, fecha=fecha, pais=pais, password=password)
+        todo = Usuario(usuario=usuario, nombre=nombre, apellido_usuario=apellido_usuario, sexo=sexo, fecha=fecha, pais=pais, password=password)
         db.session.add(todo)
         db.session.commit()
         response['usuario'] = usuario
         response['nombre'] = nombre
-        response['apellidos'] = apellidos
+        response['apellido_usuario'] = apellido_usuario
         response['sexo'] = sexo
         response['fecha'] = fecha
         response['pais'] = pais
@@ -101,7 +152,7 @@ def create_todo_post_usuario():
     response = {}
     try:
         usuario = request.get_json()['usuario']
-        todo = Todo(usuario = usuario)
+        todo = Usuario(usuario = usuario)
         db.session.add(todo)
         db.session.commit()
         response['usuario'] = usuario
