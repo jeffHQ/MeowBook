@@ -4,7 +4,7 @@
 <head>
     <title>MeowBook App</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="{{url_for('static', filename='./main.css') }}">
+    <link rel="stylesheet" href="./main.css">
 </head>
 
 <body>
@@ -12,37 +12,71 @@
     <div class="portada">
     </div>
     <div class="content">
-        <div class="bar">
-            <a class="login">
-                Log in
-            </a>
-            <a class="signin">
-                Sign in
-            </a>
-        </div>
         <div class="title">
             <h1>MeowBook</h1>
         </div>
+
         <div class="nav" id="searchForm">
-            <input class="barra" type="text" maxlength="200" name="q" id="searchFieldx" value="" placeholder="Buscar por título, autor, ISBN, editor, md5..">
+            <input class="barra" type="text" maxlength="200" name="q" id="searchFieldx" value="" placeholder="Buscar por título o autor">
             <button class="submit" type="submit"><span>buscar</span></button>
         </div>
+
+        <form class="options">
+            <div class="option">
+                <label for="editorial">Editorial:</label><br>
+                <input class="option-input" type="text" id="editorial" name="editorial">
+            </div>
+            <div class="option">
+                <label for="año_publicacion">Año de Publicacion:</label><br>
+                <select class="option-input" id="year" name="year">
+                    <option value="Accion" disabled selected>--Desde--</option>
+                    <option value="Accion">2000</option>
+                    <option value="Ficcion">1990</option>
+                    <option value="Drama">1980</option>
+                    <option value="Ficcion">1970</option>
+                    <option value="Drama">1960</option>
+                    <option value="Comedia">1950</option>
+                    <option value="Accion">1940</option>
+                    <option value="Ficcion">1930</option>
+                    <option value="Drama">1920</option>
+                    <option value="Comedia">1910</option>
+                    <option value="Accion">1900</option>
+                    </select>
+            </div>
+            <div class="option">
+                <label for="nro_paginas">Número de Páginas:</label><br>
+                <input class="option-input" type="number" id="nro_paginas" name="nro_paginas">
+            </div>
+            <div class="option">
+                <label for="genero">Género:</label><br>
+                <select class="option-input" id="genero" name="genero">
+                    <option value="Accion" disabled selected>--Seleccione un género--</option>
+                    <option value="Accion">Acción</option>
+                    <option value="Comedia">Comedia</option>
+                    <option value="Drama">Drama</option>
+                    <option value="Ficcion">Ficción</option>
+                    </select>
+            </div>
+        </form>
+
         <div class="books">
             <h1 class="populares">Los libros más populares</h1>
             <div class="container">
 
-                <a href="https://www.actualidadliteratura.com/el-club-de-la-lucha/" target="_blank"><img class="book" id="elClubDeLaLucha" src="./Imagen1.jpg"></a>
-                <a href="https://www.lecturalia.com/libro/14742/el-filo-de-la-navaja#:~:text=Un%20hombre%2C%20Larry%20Darrel%2C%20mira,el%20mundo%20de%20las%20finanzas." target=" _blank "><img class="book " src="./Imagen2.jpg "></a>
-                <a href="https://www.centrobibliotecario.cl/index.php/2019/03/19/el-elefante-desaparece-resena/#:~:text=Un%20hombre%20obsesionado%20con%20la,de%20personajes%20con%20expectativas%20extra%C3%B1as" target="_blank "><img class="book " src="./Imagen3.jpg "></a>
+                <a href="https://www.actualidadliteratura.com/el-club-de-la-lucha/" target="_blank"><img class="book" id="elClubDeLaLucha" src="images/Imagen1.jpg"></a>
+                <a href="https://www.lecturalia.com/libro/14742/el-filo-de-la-navaja#:~:text=Un%
+                20hombre%2C%20Larry%20Darrel%2C%20mira,el%20mundo%20de%20las%20finanzas." target=" _blank "><img class="book " src="images/Imagen2.jpg"></a>
+                <a href="https://www.centrobibliotecario.cl/index.php/2019/03/19/el-elefante-desaparece-resena/#
+                :~:text=Un%20hombre%20obsesionado%20con%20la,de%20personajes%20con%20expectativas%20extra%C3%B1as" target="_blank "><img class="book " src="images/Imagen3.jpg"></a>
 
-                <a target="_blank "><img class="book " src="./Imagen4.jpg "></a>
-                <a target="_blank "> <img class="book " src="./Imagen5.jpg "></a>
-                <a target="_blank "><img class="book " src="./Imagen6.jpg "></a>
+                <a target="_blank "><img class="book " src="images/Imagen4.jpg"></a>
+                <a target="_blank "> <img class="book " src="images/Imagen5.jpg"></a>
+                <a target="_blank "><img class="book " src="images/Imagen6.jpg"></a>
 
-                <a target="_blank "><img class="book " src="./Imagen7.jpg "></a>
-                <a target="_blank "><img class="book " src="./Imagen8.jpg "></a>
-                <a target="_blank "><img class="book " src="./Imagen9.jpg "></a>
-                <a target="_blank "><img class="book " src="./Imagen10.jpg "></a>
+                <a target="_blank "><img class="book " src="images/Imagen7.jpg"></a>
+                <a target="_blank "><img class="book " src="images/Imagen8.jpg"></a>
+                <a target="_blank "><img class="book " src="images/Imagen9.jpg"></a>
+                <a target="_blank "><img class="book " src="images/Imagen10.jpg"></a>
             </div>
         </div>
     </div>
