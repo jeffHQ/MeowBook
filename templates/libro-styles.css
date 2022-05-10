@@ -1,0 +1,92 @@
+body {
+    margin: 0px;
+    background-color: rgb(240, 240, 207);
+}
+
+.banner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 200px;
+    width: 100%;
+    /* border: red 2px solid; */
+}
+
+.content {
+    position: relative;
+    width: 75%;
+    margin: 0 auto;
+    /* border: 2px red solid; */
+}
+
+.box1 {
+    position: relative;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: white;
+}
+
+.title {
+    color: rgb(101, 70, 57);
+    margin: 0;
+    position: relative;
+    width: 100%;
+    font-size: 28px;
+    padding: 0 15px;
+}
+
+.form1 {
+    background-color: rgb(219, 219, 219);
+    padding: 4px 8px;
+    border: none;
+    border-radius: 8px;
+    width: 40%;
+}
+
+.form-input {
+    padding: 2px;
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+}
+
+.form-submit {
+    position: relative;
+}
+
+input#submit {
+    background-color: #bb804d;
+    border: none;
+    padding: 8px;
+    width: 100%;
+    border-radius: 4px;
+}
+
+label {
+    flex: 1;
+    padding: 3px;
+    text-align: center;
+}
+
+input {
+    flex: 1.7;
+}
+
+input.form-input {
+    flex: 1;
+    border: none;
+    border-radius: 2px;
+    padding: 3px;
+}
+
+input:focus {
+    outline: none;
+}
+
+.portada {
+    position: relative;
+    border-bottom: #bb804d solid 1px;
+    background-image: url(images/libreria.jfif);
+    background-size: cover;
+    height: 140px;
+}
