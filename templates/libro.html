@@ -1,11 +1,18 @@
+<!DOCTYPE html>
 <hmtl>
+
     <head>
-        <title>Librito</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="images/cat.png">
+        <title>Admin | Añadir libro</title>
     </head>
+
     <body>
-        <h1 style="color: black">Añadir Nuevo Libro</h1>
+        <h1>Añadir Nuevo Libro</h1>
         <p>Agregar Todos los items</p>
-        <form id = "registroLibro" action="/libro/registrar">
+        <form id="registroLibro" action="/libro/registrar">
             <div>
                 <label>
                     <span>Nombre:</span>
@@ -61,7 +68,7 @@
             const nro_paginasInput = document.getElementById('nro_paginas');
             const generoInput = document.getElementById('genero');
             const sinopsisInput = document.getElementById('sinopsis');
-            document.getElementById('registroLibro').onsubmit = function(l){
+            document.getElementById('registroLibro').onsubmit = function(l) {
                 l.preventDefault();
                 const nombre = nombreInput.value;
                 const autor = autorInput.value;
@@ -81,7 +88,9 @@
                         'genero': genero,
                         'sinopsis': sinopsis
                     }),
-                    headers: {'Content-Type': 'application/json'}
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
                 });
             };
         </script>
