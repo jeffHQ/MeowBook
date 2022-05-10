@@ -1,98 +1,90 @@
 <!DOCTYPE html>
-<hmtl>
+<html>
 
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" href="images/cat.png">
-        <title>Admin | Añadir libro</title>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/cat.png">
+    <link rel="stylesheet" href="./libro.css">
+    <title>Admin | Añadir libro</title>
+</head>
 
-    <body>
-        <h1>Añadir Nuevo Libro</h1>
-        <p>Agregar Todos los items</p>
-        <form id="registroLibro" action="/libro/registrar">
-            <div>
-                <label>
-                    <span>Nombre:</span>
+<body>
+    <div class="portada">
+    </div>
+    <div class="content">
+        <div class="box1">
+            <form class="form1" id="registroLibro" action="/libro/registrar">
+                <h1 class="title">Añadir nuevo libro</h1>
+                <div class="form-input">
+                    <label for="nombre">Nombre</label>
                     <input type="text" id="nombre" name="nombre">
-                </label>
-            </div>
-            <div>
-                <label>
-                    <span>Autor:</span>
+                </div>
+                <div class="form-input">
+                    <label for="autor">Autor</label>
                     <input type="text" id="autor" name="autor">
-                </label>
-            </div>
-            <div>
-                <label>
-                    <span>Editorial:</span>
+                </div>
+                <div class="form-input">
+                    <label for="editorial">Editorial</label>
                     <input type="text" id="editorial" name="editorial">
-                </label>
-            </div>
-            <div>
-                <label>
-                    <span>Año de Publicacion:</span>
+                </div>
+                <div class="form-input">
+                    <label for="año_publicacion">Año de Publicacion</label>
                     <input type="number" id="año_publicacion" name="año_publicacion">
-                </label>
-            </div>
-            <div>
-                <label>
-                    <span>Número de Páginas:</span>
+                </div>
+                <div class="form-input">
+                    <label for="nro_paginas">Número de Páginas</label>
                     <input type="number" id="nro_paginas" name="nro_paginas">
-                </label>
-            </div>
-            <div>
-                <label>
-                    <span>Género:</span>
+                </div>
+                <div class="form-input">
+                    <label for="genero">Género</label>
                     <input type="text" id="genero" name="genero">
-                </label>
-            </div>
-            <div>
-                <label>
-                    <span>Sinopsis:</span>
-                    <input type="text" id="sinopsis" name="sinopsis">
-                </label>
-            </div>
-            <div>
-                <input type="submit" value="Añadir Libro">
-            </div>
-        </form>
 
-        <script>
-            const nombreInput = document.getElementById('nombre');
-            const autorInput = document.getElementById('autor');
-            const editorialInput = document.getElementById('editorial');
-            const año_publicacionInput = document.getElementById('año_publicacion');
-            const nro_paginasInput = document.getElementById('nro_paginas');
-            const generoInput = document.getElementById('genero');
-            const sinopsisInput = document.getElementById('sinopsis');
-            document.getElementById('registroLibro').onsubmit = function(l) {
-                l.preventDefault();
-                const nombre = nombreInput.value;
-                const autor = autorInput.value;
-                const editorial = editorialInput.value;
-                const año_publicacion = año_publicacionInput.value;
-                const nro_paginas = nro_paginasInput.value;
-                const genero = generoInput.value;
-                const sinopsis = sinopsisInput.value;
-                fetch('/libro/registrar', {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        'nombre': nombre,
-                        'autor': autor,
-                        'editorial': editorial,
-                        'año_publicacion': año_publicacion,
-                        'nro_paginas': nro_paginas,
-                        'genero': genero,
-                        'sinopsis': sinopsis
-                    }),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-            };
-        </script>
-    </body>
-</hmtl>
+                </div>
+                <div class="form-input">
+                    <label for="sinopsis">Sinopsis</label>
+                    <input type="text" id="sinopsis" name="sinopsis">
+                </div>
+                <input type="submit" value="Añadir Libro" id="submit">
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const nombreInput = document.getElementById('nombre');
+        const autorInput = document.getElementById('autor');
+        const editorialInput = document.getElementById('editorial');
+        const año_publicacionInput = document.getElementById('año_publicacion');
+        const nro_paginasInput = document.getElementById('nro_paginas');
+        const generoInput = document.getElementById('genero');
+        const sinopsisInput = document.getElementById('sinopsis');
+        document.getElementById('registroLibro').onsubmit = function(l) {
+            l.preventDefault();
+            const nombre = nombreInput.value;
+            const autor = autorInput.value;
+            const editorial = editorialInput.value;
+            const año_publicacion = año_publicacionInput.value;
+            const nro_paginas = nro_paginasInput.value;
+            const genero = generoInput.value;
+            const sinopsis = sinopsisInput.value;
+            fetch('/libro/registrar', {
+                method: 'POST',
+                body: JSON.stringify({
+                    'nombre': nombre,
+                    'autor': autor,
+                    'editorial': editorial,
+                    'año_publicacion': año_publicacion,
+                    'nro_paginas': nro_paginas,
+                    'genero': genero,
+                    'sinopsis': sinopsis
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        };
+    </script>
+</body>
+
+</html>
