@@ -10,23 +10,51 @@ body {
     box-sizing: border-box;
 }
 
+#background {
+    display: none;
+    position: absolute;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.577);
+}
+
+.content {
+    display: flex;
+}
+
 .container {
     /*border: 1px solid red;*/
     width: 100%;
-    padding: 15px;
+    padding: 10px;
 }
 
 .login {
-    /*border: 1px solid blue;*/
-    margin: auto;
-    margin-top: 120px;
-    width: 450px;
-    height: 380px;
-    min-width: 450px;
-    min-height: 350px;
+    position: absolute;
+    border: 1px solid white;
+    top: -25%;
+    margin-top: 25%;
+    left: 35%;
+    width: 520px;
     border-radius: 5px;
     background: white;
     padding: 5px;
+}
+
+div#registro {
+    position: absolute;
+    top: -15%;
+    margin-top: 15%;
+    left: 35%;
+    border: 1px solid white;
+    display: none;
+    width: 520px;
+    border-radius: 5px;
+    background: white;
+}
+
+.registrate {
+    height: 15%;
 }
 
 h1 {
@@ -35,6 +63,11 @@ h1 {
     font-size: 35px;
 }
 
+input {
+    border: none;
+}
+
+input[type="text"],
 input[type="email"],
 input[type="password"] {
     /*border: 1px solid green;*/
@@ -43,6 +76,7 @@ input[type="password"] {
     width: 83%;
     padding: 5px;
     border: none;
+    outline: none;
 }
 
 input:focus {
@@ -56,14 +90,32 @@ input:focus {
     border-radius: 5px;
 }
 
+#input-nombre {
+    width: 50%;
+    margin-right: 5px;
+}
+
+#input-apellido {
+    width: 50%;
+    margin-left: 5px;
+}
+
 .icon {
     /*border: 1px solid brown;*/
     min-width: 50px;
     text-align: center;
 }
 
+.icon-hidden {
+    /*border: 1px solid brown;*/
+    min-width: 50px;
+    text-align: center;
+    color: white;
+}
+
 .button {
     font-family: 'Courier New', Courier, monospace;
+    /*border: 1px solid black;*/
     border: none;
     width: 100%;
     color: white;
