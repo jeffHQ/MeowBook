@@ -12,24 +12,75 @@
 </head>
 
 <body>
-    <form class="login ">
-        <h1>Iniciar Sesión</h1>
-        <div class="container ">
-            <div class="input-container ">
-                <i class="fa-solid fa-envelope icon "></i>
-                <input id="email " type="email " placeholder="Email@ ">
+    <div id="background">
+        <div class="registro" id="registro">
+            <div class="registrate">
+                <h1 class="Title">Registrarse</h1>
             </div>
-            <div class="input-container ">
-                <i class="fa-solid fa-key icon "></i>
-                <input id="contraseña " type="password " placeholder="Contraseña ">
-            </div>
+            <form class="container">
+                <div style="display: flex;">
+                    <div class="input-container" id="input-nombre">
+                        <input id="nombre" type="text" placeholder="Nombre">
+                    </div>
+                    <div class="input-container" id="input-apellido">
+                        <input id="apellido" type="text" placeholder="Apellido">
+                    </div>
+                </div>
+                <div class="input-container">
+                    <i class="fa-solid fa-envelope icon"></i>
+                    <input id="email" type="email" placeholder="Email@">
+                </div>
+                <div class="input-container">
+                    <i class="fa-solid fa-user-astronaut icon"></i>
+                    <input id="usuario" type="text" placeholder="usuario">
+                </div>
+                <div class="input-container">
+                    <i class="fa-solid fa-key icon"></i>
+                    <input id="contraseña" type="password" placeholder="Password">
+                </div>
+                <input type="submit" value="Sign in" class="button">
+                <p>
+                    ¿Ya eres parte de la familia MeowBook (＾• ω •＾)?
+                    <a class="link" href="javascript: cerrar()">Log in</a>
+                </p>
+            </form>
         </div>
-        <input type="submit " value="Log In " class="button ">
-        <p>
-            ¿Aún no tienes una cuenta MiowBook (=^･ｪ･^=)?
-            <a class="link " href="./registro.html ">Sign In</a>
-        </p>
-    </form>
+    </div>
+
+    <main class="content" id="content">
+        <form class="login ">
+            <h1>Iniciar Sesión</h1>
+            <div class="container">
+                <div class="input-container">
+                    <i class="fa-solid fa-envelope icon"></i>
+                    <input id="email" type="email" placeholder="Email@">
+                </div>
+                <div class="input-container ">
+                    <i class="fa-solid fa-key icon "></i>
+                    <input id="contraseña" type="password" placeholder="Contraseña">
+                </div>
+            </div>
+            <input type="submit" value="Log In" class="button">
+            <p>
+                ¿Aún no tienes una cuenta MeowBook (=^･ｪ･^=)?
+                <a class="link" href="javascript: abrir()">Registrarse</a>
+            </p>
+        </form>
+    </main>
+    <script>
+        function abrir() {
+            document.getElementById("registro").style.display = "block";
+            document.getElementById("content").style.display = "none";
+            document.getElementById("background").style.display = "block";
+        }
+
+        function cerrar() {
+            document.getElementById("registro").style.display = "none";
+            document.getElementById("content").style.display = "block";
+            document.getElementById("background").style.display = "none";
+        }
+    </script>
+
 </body>
 
 </html>
