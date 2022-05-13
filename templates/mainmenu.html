@@ -5,10 +5,18 @@
     <title>MeowBook App</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="{{url_for('static', filename='./main.css') }}">
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 
 <body>
+    
 
+
+    <div id="background">
+    </div>
     <div class="portada">
     </div>
     <div class="content">
@@ -23,63 +31,100 @@
         <div class="title">
             <h1>MeowBook</h1>
         </div>
-        <div class="nav" id="searchForm">
+        <form class="nav" id="searchForm">
             <input class="barra" type="text" maxlength="200" name="q" id="searchFieldx" value="" placeholder="Buscar por título, autor, ISBN, editor, md5..">
-            <button class="submit" type="submit"><span>buscar</span></button>
-        </div>
-        <div class="books">
+            <input type="submit" value="Buscar" class="button">
+        </form>
+        <input id="prueba" type="submit" value="NADA">
+        <div class="books" id="books">
             <h1 class="populares">Los libros más populares</h1>
             <div class="container">
 
-                <a href="https://www.actualidadliteratura.com/el-club-de-la-lucha/" target="_blank"><img class="book" id="elClubDeLaLucha" src="./Imagen1.jpg"></a>
-                <a href="https://www.lecturalia.com/libro/14742/el-filo-de-la-navaja#:~:text=Un%20hombre%2C%20Larry%20Darrel%2C%20mira,el%20mundo%20de%20las%20finanzas." target=" _blank "><img class="book " src="./Imagen2.jpg "></a>
-                <a href="https://www.centrobibliotecario.cl/index.php/2019/03/19/el-elefante-desaparece-resena/#:~:text=Un%20hombre%20obsesionado%20con%20la,de%20personajes%20con%20expectativas%20extra%C3%B1as" target="_blank "><img class="book " src="./Imagen3.jpg "></a>
-
-                <a target="_blank "><img class="book " src="./Imagen4.jpg "></a>
-                <a target="_blank "> <img class="book " src="./Imagen5.jpg "></a>
-                <a target="_blank "><img class="book " src="./Imagen6.jpg "></a>
-
-                <a target="_blank "><img class="book " src="./Imagen7.jpg "></a>
-                <a target="_blank "><img class="book " src="./Imagen8.jpg "></a>
-                <a target="_blank "><img class="book " src="./Imagen9.jpg "></a>
-                <a target="_blank "><img class="book " src="./Imagen10.jpg "></a>
+                {% for libro in libros %}
+                <a target="_blank " value ="{{libro.nombre_libro}}" id="editar" ><img class="book "   src="{{libro.imagen}}"></a>
+                {% endfor %}
+                
             </div>
         </div>
-    </div>
+        <a href="./editarlibro">Editar Libro</a>
+        <div class="container" id="ra">
+            <div class="container">
 
+                
+               
+                
+                
+            </div>
+        </div>
+        
+
+    </div>
     <script>
-        const nombreInput = document.getElementById('nombre');
-        const autorInput = document.getElementById('autor');
-        const editorialInput = document.getElementById('editorial');
-        const año_publicacionInput = document.getElementById('año_publicacion');
-        const nro_paginasInput = document.getElementById('nro_paginas');
-        const generoInput = document.getElementById('genero');
-        const sinopsisInput = document.getElementById('sinopsis');
-        document.getElementById('registroLibro').onsubmit = function(l) {
-            l.preventDefault();
-            const nombre = nombreInput.value;
-            const autor = autorInput.value;
-            const editorial = editorialInput.value;
-            const año_publicacion = año_publicacionInput.value;
-            const nro_paginas = nro_paginasInput.value;
-            const genero = generoInput.value;
-            const sinopsis = sinopsisInput.value;
-            fetch('/libro/registrar', {
-                method: 'POST',
-                body: JSON.stringify({
-                    'nombre': nombre,
-                    'autor': autor,
-                    'editorial': editorial,
-                    'año_publicacion': año_publicacion,
-                    'nro_paginas': nro_paginas,
-                    'genero': genero,
-                    'sinopsis': sinopsis
-                }),
-                headers: {
-                    'Content-Type': 'application/json'
+
+            
+
+            const searchFieldxInput = document.getElementById('searchFieldx');
+            document.getElementById('searchForm').onsubmit = function(l){
+                l.preventDefault();
+                const searchFieldx = searchFieldxInput.value;
+                
+                fetch('/libro/busqueda', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        'searchFieldx': searchFieldx
+                    }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+            }).then(function (response) {
+                console.log('response : ', response);
+                
+                return response.json();
+            }).then(function(responseJson){
+                console.log('responseJson = ', responseJson);
+
+                //document.getElementById('prueba').value = length(responseJson);
+                valor = 0
+                responseJson.forEach(function(i) {
+                    valor = valor +1
+                });
+                document.getElementById('books').className = 'hidden';
+
+                
+                for (let i = 0; i < valor; i++) {
+                    //const img = document.createElement("img");
+                    //img.src = "https://lenguajejs.com/assets/logo.svg";
+                    //img.alt = "Logo Javascript";
+                    //document.getElementsByClassName('container').appendChild(img);
+                    //document.body.appendChild(img);
+                    
+                    //const div = document.createElement("div")  
+                    //div.textContent = responseJson[i][0];
+                    //const app = document.querySelector("#ra");
+                    //app.insertAdjacentElement("afterbegin", div);
+
+
+                    const img = document.createElement("img")
+                    img.src = responseJson[i][7];
+                    img.className = "book"
+                    img.title = responseJson[i][0]
+                    img.id = "delete"
+
+                    const appimg = document.querySelector("#ra");
+                    appimg.insertAdjacentElement("afterbegin", img);
+
+                    
+
                 }
+
+            }).catch(function() {
+                
             });
         };
+        
     </script>
+    
+
+
 </body>
 </hmtl>

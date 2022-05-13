@@ -10,16 +10,16 @@
     <title>MeowBook App</title>
 </head>
 <body>
-    <form class="registro">
+    <form class="registro" id="form">
         <h1>Registrarse</h1>
         <div class="container">
             <div class="input-container">
                 <i class="fa-solid fa-user icon"></i>
-                <input id="nombre" type="text" placeholder="Nombre">
+                <input id="nombre_usuario" type="text" placeholder="Nombre">
             </div>
             <div class="input-container">
                 <i class="fa-solid fa-user icon-hidden"></i>
-                <input id="apellido" type="text" placeholder="Apellido">
+                <input id="apellido_usuario" type="text" placeholder="Apellido">
             </div>
             <div class="input-container">
                 <i class="fa-solid fa-envelope icon"></i>
@@ -36,7 +36,7 @@
             <input type="submit" value="Sign in" class="button">
             <p>
                 ¿Ya eres parte de la familia MeowBook (＾• ω •＾)?
-                <a class="link" href="./templates/login.html">Log in</a>
+                <a class="link" href=".login">Log in</a>
             </p>
         </div>
     </form>
@@ -45,34 +45,33 @@
 
         <script>
             //Handling submit
-            const usuarioInput = document.getElementById('usuario')
-            const nombreInput = document.getElementById('nombre');
+            
+            const nombre_usuarioInput = document.getElementById('nombre_usuario');
             const apellido_usuarioInput = document.getElementById('apellido_usuario')
-            const sexoInput = document.getElementById('sexo')
-            const fechaInput = document.getElementById('fecha')
-            const paisInput = document.getElementById('pais')
-            const passwordInput = document.getElementById('password')
+            const emailInput = document.getElementById('email')
+            const usuarioInput = document.getElementById('usuario')
+            const contraseñaInput = document.getElementById('contraseña')
+            
+            
 
             document.getElementById('form').onsubmit = function(e) {
                 e.preventDefault();
-                const usuario = usuarioInput.value;
-                const nombre = nombreInput.value;
+                
+                const nombre_usuario = nombre_usuarioInput.value;
                 const apellido_usuario = apellido_usuarioInput.value;
-                const sexo = sexoInput.value;
-                const fecha = fechaInput.value;
-                const pais = paisInput.value;
-                const password = passwordInput.value;
+                const email = emailInput.value;
+                const usuario = usuarioInput.value;
+                const contraseña = contraseñaInput.value;
 
                 fetch('/usuario/create', {
                     method: 'POST',
                     body: JSON.stringify({
-                        'usuario': usuario,
-                        'nombre': nombre,
+                        
+                        'nombre_usuario': nombre_usuario,
                         'apellido_usuario': apellido_usuario,
-                        'sexo': sexo,
-                        'fecha': fecha,
-                        'pais': pais,
-                        'password': password
+                        'email': email,
+                        'usuario': usuario,
+                        'contraseña': contraseña
                     }),
                     headers: {
                         'Content-Type': 'application/json'
@@ -83,38 +82,35 @@
                 }).then(function(responseJson){
                     console.log('responseJson = ', responseJson);
                     //cadenas
-                    const usuario_txt = document.createElement('usuario_txt');
-                    const nombre_txt = document.createElement('nombre_txt');
+                    
+                    const nombre_usuario_txt = document.createElement('nombre_usuario_txt');
                     const apellido_usuario_txt = document.createElement('apellido_usuario_txt');
-                    const sexo_txt = document.createElement('sexo_txt');
-                    const fecha_txt = document.createElement('fecha_txt');
-                    const pais_txt = document.createElement('pais_txt');
-                    const password_txt = document.createElement('password_txt');
+                    const email_txt = document.createElement('email_txt');
+                    const usuario_txt = document.createElement('usuario_txt');
+                    const contraseña_txt = document.createElement('contraseña_txt');
 
                     //crear cadenas de texto
-                    usuario_txt.innerHTML = responseJson['usuario_txt']
-                    nombre_txt.innerHTML = responseJson['nombre']
+                    
+                    nombre_usuario_txt.innerHTML = responseJson['nombre_usuario_txt']
                     apellido_usuario_txt.innerHTML = responseJson['apellido_usuario_txt']
-                    sexo_txt.innerHTML = responseJson['sexo_txt']
-                    fecha_txt.innerHTML = responseJson['fecha_txt']
-                    pais_txt.innerHTML = responseJson['pais_txt']
-                    password_txt.innerHTML = responseJson['password_txt']
+                    email_txt.innerHTML = responseJson['email_txt']
+                    usuario_txt.innerHTML = responseJson['usuario_txt']
+                    contraseña_txt.innerHTML = responseJson['contraseña_txt']
 
                     //concatenar
-                    document.getElementById('usuarios').appendChild(nombre_txt);   
+                    document.getElementById('usuarios').appendChild(nombre_usuario_txt);   
                     document.getElementById('error').className = 'hidden';
 
                     //eliminar casillas
-                    document.getElementById('usuario').value = '';
-                    document.getElementById('nombre').value = '';
+                    
+                    document.getElementById('nombre_usuario').value = '';
                     document.getElementById('apellido_usuario').value = '';
-                    document.getElementById('sexo').value = '';
-                    document.getElementById('fecha').value = '';
-                    document.getElementById('pais').value = '';
-                    document.getElementById('password').value = '';
+                    document.getElementById('email').value = '';
+                    document.getElementById('usuario').value = '';
+                    document.getElementById('contraseña').value = '';
 
                 }).catch(function() {
-                    document.getElementById('error').className = '';
+                    document.getElementById('error').className='className';
                 });
             };
         </script>
