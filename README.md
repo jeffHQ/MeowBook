@@ -28,3 +28,24 @@ Collaborative platform-based development project
         que trabajen en conjunto para hacer tanto de la página web MeowBook como la comunidad que han formado mejoren
         tanto como ellos se lo permitan.
     </p>
+    <h3>Información acerca de las librerías/frameworks/plugins utilizadas en Front-end, Back-end y Base de datos</h3>
+    <ul>
+        <li><strong>Front-end:</strong> Javascript</li>
+        <li><strong>Back-end:</strong> 
+            <ul>
+                <li>-Flask-SQLAlchemy</li>
+                <li>-Flask-Migrate</li>
+                <li>-Flask</li>
+            </ul>
+        </li>
+    </ul>
+    <h3>Base de datos:</h3>
+    La base de datos que usamos es PostgreSQL.
+    <h3>Manejo de errores HTTP</h3>
+    <ul>
+        <li>-500</li>
+        <li>-400</li>
+        <li>-300</li>
+        <li>-200</li>
+        <li>-100</li>
+    </ul>
