@@ -1,7 +1,7 @@
 body{
     font-family: 'Courier New', Courier, monospace;
     margin: 0;
-    background: url(./libreria.jfif);
+    background: url(../images/libreria.jfif);
     background-size: cover;
     background-attachment: fixed;
 }
