@@ -6,12 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="images/cat.png">
-    <link rel="stylesheet" href="./libro.css">
-    <title>Admin | Añadir libro</title>
+    <link rel="stylesheet" href="../static/css/libro.css">
+    <title>Añadir libro</title>
 </head>
 
 <body>
+    
     <div class="portada">
+    </div>
+    <div class="aside">
+        <div><a href="/main_menu">Volver al menú principal</a></div>
     </div>
     <main>
         <div class="newbook">
@@ -27,48 +31,68 @@
                     </div>
                     <div class="info">
                         <label for="autor">Autor</label>
-                        <input type="text" id="autor" name="autor">
+                        <select required id="autor" name="autor">
+                            {%for autor in autores%}
+                                <option value="{{autor.nombre_autor}}">{{autor.nombre_autor}}</option>
+                            {%endfor%}
+                        </select>
                     </div>
                     <div class="info">
                         <label for="editorial">Editorial</label>
-                        <input type="text" id="editorial" name="editorial">
+                        <input type="text" id="editorial" name="editorial" required>
                     </div>
                     <div class="info">
                         <label for="genero">Género</label>
-                        <select id="genero" name="genero">
-                <option value="Accion" disabled selected>--Seleccione un género--</option>
-                <option value="Accion">                     Acción   </option>
-                <option value="Comedia">                    Comedia </option>
-                <option value="Drama">                      Drama     </option>
-                <option value="Ficcion">                    Ficción </option>
-                </select>
+                        <select required id="genero" name="genero">
+                            {% for genero in generos%}
+                                <option value="{{genero.nombre_genero}}">{{genero.nombre_genero}}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                     <div class="info">
                         <label for="nro_paginas">Páginas</label>
-                        <input type="number" min="0" step="10" id="nro_paginas" name="nro_paginas">
+                        <input type="number" min="0" step="1" id="nro_paginas" name="nro_paginas" required>
                     </div>
                     <div class="info">
                         <label for="año_publicacion">Año</label>
-                        <input type="number" min="1800" step="10" max="2022" id="año_publicacion" name="año_publicacion">
+                        <input type="date" id="año_publicacion" name="año_publicacion" required>
+                    </div>
+
+                    <div class="info">
+                        <label for="imagen">Imagen</label>
+                        <input type="text" id="imagen" name="imagen" required>
                     </div>
                 </div>
+
+
                 <div class="box2">
                     <label style="font-weight:bold" for="sinopsis">Sinopsis</label><br>
                     <textarea cols="30" rows="10" id="sinopsis" name="sinopsis"></textarea>
                 </div>
-                <img class="image" src="">
-                <div class="box3">
-                    <div id="div_file">
-                        <p id="texto">cargar imagen</p>
-                        <input type="file" id="btn_enviar">
-                    </div>
-                </div>
+                
+
+
                 <div class="botones">
                     <input type="submit" value="Añadir Libro" id="submit">
             </form>
-
             </div>
-        </div>
+            <div >
+                <ul>
+                    {% for libro in libros %}
+                        <li class="libros_agregados"> 
+                            <h1>{{libro.nombre_libro}}</h1>
+                            <p><strong>Autor: </strong>{{libro.autor}}</p>   
+                            <p><strong>Editorial:</strong> {{libro.editorial}}</p>      
+                            <p><strong>Género: </strong>{{libro.genero}}</p>      
+                            <p><strong>Páginas: </strong>{{libro.paginas}}</p>      
+                            <p><strong>Fecha de publicación:</strong> {{libro.fecha_publicacion}}</p>      
+                            <p><strong>Sinopsis:</strong> {{libro.sinopsis}}</p>   
+                            <button class="delete-button" data-id="{{libro.nombre_libro}}">&cross;</button>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div> 
     </main>
 
     <script>
@@ -79,6 +103,7 @@
         const nro_paginasInput = document.getElementById('nro_paginas');
         const generoInput = document.getElementById('genero');
         const sinopsisInput = document.getElementById('sinopsis');
+        const imagenInput = document.getElementById('imagen');
         document.getElementById('registroLibro').onsubmit = function(l) {
             l.preventDefault();
             const nombre = nombreInput.value;
@@ -88,6 +113,7 @@
             const nro_paginas = nro_paginasInput.value;
             const genero = generoInput.value;
             const sinopsis = sinopsisInput.value;
+            const imagen = imagenInput.value;
             fetch('/libro/registrar', {
                 method: 'POST',
                 body: JSON.stringify({
@@ -97,14 +123,32 @@
                     'año_publicacion': año_publicacion,
                     'nro_paginas': nro_paginas,
                     'genero': genero,
-                    'sinopsis': sinopsis
+                    'sinopsis': sinopsis,
+                    'imagen': imagen
                 }),
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
         };
+
+        const items = document.querySelectorAll('.delete-button');
+            for (let i = 0; i < items.length; i++) {
+                const item = items[i];
+                item.onclick = function(e) {
+                    console.log("e: ", e);
+                    const libro_name = e.target.dataset['id'];
+                    fetch('/libros/' + libro_name + '/delete-libro', {
+                        method: 'DELETE'
+                    }).then(function(response) {
+                        return response.json();
+                    }).then(function(jsonResponse){
+                        if (jsonResponse['success']) {
+                            item.remove();
+                        }
+                    })
+                }
+            }
     </script>
 </body>
-
 </html>
