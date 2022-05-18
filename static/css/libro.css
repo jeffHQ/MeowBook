@@ -5,6 +5,25 @@
     box-sizing: border-box;
 }
 
+.flexbox {
+    display: flex;
+    margin: 10px;
+}
+
+.menu_principal {
+    background-color: #441e0c;
+    position: relative;
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+}
+
+.link_menu_principal {
+    color: white;
+    text-decoration: none;
+
+}
+
 body {
     margin: 0px;
     background-color: rgb(240, 240, 207);
@@ -16,7 +35,7 @@ body {
 .portada {
     position: relative;
     border-bottom: #bb804d solid 1px;
-    background-image: url(images/libreria.jfif);
+    background-image: url(../images/libreria.jfif);
     background-size: cover;
     height: 7em;
 }
@@ -32,11 +51,17 @@ main {
 /*.main/.newbook--------------------------------------------------------------------------------------------------------------------*/
 
 .newbook {
-    position: relative;
-    top: 1em;
+    flex:1;
     min-width: 450px;
     max-width: 450px;
     left: 3em;
+    margin: 10px;
+}
+
+.new_book {
+    position: relative;
+    top: 1em;
+    right: 3em;
 }
 
 
@@ -161,14 +186,14 @@ input#submit {
     margin: 5px auto;
     background-color: #bb804d;
     border: none;
-    -webkit-border-radius: 5px;
+    border-radius: 5px;
     font-family: 'Arvo', serif;
     font-family: 'Raleway', sans-serif;
     font-family: 'Roboto Mono', monospace;
     font-family: 'Varela Round', sans-serif;
     height: 24px;
     width: 100%;
-    -webkit-box-shadow: 0px 3px 0px #7c2700;
+    box-shadow: 0px 3px 0px #7c2700;
 }
 
 input#submit:hover {
@@ -209,8 +234,8 @@ div#div_file {
     cursor: pointer;
     margin: 5px auto;
     background-color: #bb804d;
-    -webkit-border-radius: 5px;
-    -webkit-box-shadow: 0px 3px 0px rgb(142, 94, 50);
+    border-radius: 5px;
+    box-shadow: 0px 3px 0px rgb(142, 94, 50);
 }
 
 input#btn_enviar {
@@ -233,6 +258,15 @@ input#btn_enviar:hover {
 div#div_file:hover {
     background-color: #441e0c;
     cursor: pointer;
+}
+
+.libros_agregados {
+    height: auto;
+    flex:1;
+    background-color: rgba(227, 227, 227, 0.859);
+    border-radius: 8px;
+    box-shadow: 0px 0px 24px 9px rgba(0, 0, 0, 0.37);
+    margin: 10px;
 }
 
 

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>MeowBook App</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/main_menu.css') }}">
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="content">
+        <div class="header">
+        </div>
+        <main class="main">
+            <div class="title">
+                <h1>MeowBook</h1>
+            </div>
+    
+            <form class="nav" id="searchForm">
+                <input class="barra" type="text" maxlength="200" name="q" id="searchFieldx" value="" placeholder="Buscar por título o autor">
+                <input class="submit" type="submit" value="Buscar">
+            </form>
+    
+            <form class="options">
+                <div class="option">
+                    <label for="editorial">Editorial:</label>
+                    <input class="option-input" type="text" id="editorial" name="editorial">
+                </div>
+                <div class="option">
+                    <label for="año_publicacion">Año de Publicacion:</label>
+                    <select class="option-input" id="year" name="year">
+                        <option value="Accion" disabled selected>--Desde--</option>
+                        <option value="Accion">2000</option>
+                        <option value="Ficcion">1990</option>
+                        <option value="Drama">1980</option>
+                        <option value="Ficcion">1970</option>
+                        <option value="Drama">1960</option>
+                        <option value="Comedia">1950</option>
+                        <option value="Accion">1940</option>
+                        <option value="Ficcion">1930</option>
+                        <option value="Drama">1920</option>
+                        <option value="Comedia">1910</option>
+                        <option value="Accion">1900</option>
+                        </select>
+                </div>
+                <div class="option">
+                    <label for="nro_paginas">Número de Páginas:</label><br>
+                    <select class="option-input" id="min" name="min">
+                        <option value="Accion" disabled selected>--mín--</option>
+                        <option value="Accion">50</option>
+                        <option value="Ficcion">100</option>
+                        <option value="Drama">200</option>
+                        <option value="Ficcion">300</option>
+                        <option value="Drama">400</option>
+                        <option value="Comedia">500</option>
+                        <option value="Accion">600</option>
+                        <option value="Ficcion">650</option>
+                        <option value="Drama">700</option>
+                        <option value="Comedia">750</option>
+                        <option value="Accion">800</option>
+                        </select>
+                    <select class="option-input" id="max" name="max">
+                            <option value="Accion" disabled selected>--max--</option>
+                            <option value="Accion">100</option>
+                            <option value="Ficcion">200</option>
+                            <option value="Drama">300</option>
+                            <option value="Ficcion">400</option>
+                            <option value="Drama">500</option>
+                            <option value="Comedia">600</option>
+                            <option value="Accion">700</option>
+                            <option value="Ficcion">800</option>
+                            <option value="Drama">900</option>
+                            <option value="Comedia">>1000</option>
+                            </select>
+                </div>
+                <div class="option">
+                    <label for="genero">Género:</label>
+                    <select class="option-input" id="genero" name="genero">
+                        <option value="Accion" disabled selected>--Seleccione un género--</option>
+                        <option value="Accion">Acción</option>
+                        <option value="Comedia">Comedia</option>
+                        <option value="Drama">Drama</option>
+                        <option value="Ficcion">Ficción</option>
+                        </select>
+                </div>
+            </form>
+            <div class="container" id="ra"></div>
+            <div class="books" id="books">
+                <h1 class="populares">Los libros agregados</h1>
+                <div>
+                    <ul>
+                        <li class = "book"> 
+                            {% for libro in libros %}
+                                <a target="_blank" value ="{{libro.nombre_libro}}" id="editar" >{{libro.nombre_libro}}</a>
+                            {% endfor %}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+     
+        </main>
+        <aside class="aside">
+            <div class="aside-content">
+                <div class="option"><a class="link" href="/login">Cerrar sesión</a></div>
+                <div class="option"><a class="link" href="/libro">Agregar libro</a></div>
+                <div class="option"><a class="link" href="/editarlibro">Editar Libro</a></div>
+                <div class="description">
+                    <h1 style="font-size: 24px; color:black;">MeowBook</h1>
+                    <p style="font-size: 16px; color:black;">MeowBook es una aplicación web que permite a los usuarios buscar libros por título, autor, editorial, año de publicación, número de páginas, género y puntuación.
+                    El usuario puede agregar libros a su lista de libros favoritos y puede ver sus libros favoritos.
+                    Además, el usuario puede agregar comentarios a los libros que le gustan y puede ver sus comentarios.
+                    </p>
+                </div>
+            </div>
+        </aside>
+    </div>
+    <script>
+
+            
+
+            const searchFieldxInput = document.getElementById('searchFieldx');
+            document.getElementById('searchForm').onsubmit = function(l){
+                l.preventDefault();
+                const searchFieldx = searchFieldxInput.value;
+                
+                fetch('/libro/busqueda', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        'searchFieldx': searchFieldx
+                    }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+            }).then(function (response) {
+                console.log('response : ', response);
+                
+                return response.json();
+            }).then(function(responseJson){
+                console.log('responseJson = ', responseJson);
+
+                //document.getElementById('prueba').value = length(responseJson);
+                valor = 0
+                responseJson.forEach(function(i) {
+                    valor = valor +1
+                });
+                document.getElementById('books').className = 'hidden';
+
+                
+                for (let i = 0; i < valor; i++) {
+                    
+                    const img = document.createElement("img")
+                    img.src = responseJson[i][7];
+                    img.className = "book"
+                    img.title = responseJson[i][0]
+                    img.id = "delete"
+
+                    const appimg = document.querySelector("#ra");
+                    appimg.insertAdjacentElement("afterbegin", img);
+
+                    
+
+                }
+
+            }).catch(function() {
+                
+            });
+        };
+        
+    </script>
+    
+
+
+</body>
+</hmtl>
