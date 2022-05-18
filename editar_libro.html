@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/cat.png">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/editar_libro.css') }}">
+    <title>Admin | Añadir libro</title>
+</head>
+
+<body>
+    <div class="portada">
+    </div>
+    <main>
+        <div class="menu_principal"><a class="link_menu_principal" href="/main_menu">VOLVER AL MENÚ PRINCIPAL</a></div>
+        <div class="newbook">
+
+            <form class="form1" id="edicionlibro" action="/libro/registrar">
+                <div class="box1">
+                    <div class="info">
+                        <label for="autor">autor</label>
+                        <select id="eleccionlibro" name="autor">
+                            {% for libro in libros %}
+                                <option>{{libro.nombre_libro}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="botones">
+                        <input type="submit" value="Editar Libro" id="submit">
+                    </div>
+                </div>
+            </form>
+
+            <div class="form_edit" id="form_edit" style="display: none;">
+
+                <div class="box1">
+                    <div class="info">
+                        <label for="nombre_libro">Nombre</label>
+                        <button id ="libro_editar" value=""></button>>
+                        <input type="text" id="nombre_libro" name="nombre_libro" value="">
+                    </div>
+                    <div class="info">
+                        <label for="autor">Autor</label>
+                        <select id="autor" name="autor">
+                            {%for autor in autores%}
+                                <option value="{{autor.nombre_autor}}">{{autor.nombre_autor}}</option>
+                            {%endfor%}
+                        </select>
+                    </div>
+                    <div class="info">
+                        <label for="editorial">Editorial</label>
+                        <input type="text" id="editorial" name="editorial" value="">
+                    </div>
+                    <div class="info">
+                        <label for="genero">Género</label>
+                        <select id="genero" name="genero">
+                            {% for genero in generos%}
+                                <option value="{{genero.nombre_genero}}">{{genero.nombre_genero}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="info">
+                        <label for="nro_paginas">Páginas</label>
+                        <input type="number" min="0" step="1" id="nro_paginas" name="nro_paginas" value="">
+                    </div>
+                    <div class="info">
+                        <label for="año_publicacion">Año</label>
+                        <input type="date" id="año_publicacion" name="año_publicacion" value="">
+                    </div>
+
+                    <div class="info">
+                        <label for="imagen">Imagen</label>
+                        <input type="text" id="imagen" name="imagen" value="">
+                    </div>
+                </div>
+
+
+                <div class="box2">
+                    <label style="font-weight:bold" for="sinopsis">Sinopsis</label><br>
+                    <textarea cols="30" rows="10" id="sinopsis" name="sinopsis" value=""></textarea>
+                </div>
+                
+
+                <div class="botones">
+                    <input type="submit" value="Añadir Libro" id="editar_libro">
+            </div>
+
+        </div>
+
+
+
+    </main>
+
+        <script>
+
+            const eleccionlibroInput = document.getElementById('eleccionlibro');
+
+            document.getElementById('edicionlibro').onsubmit = function(a){
+                a.preventDefault();
+                const eleccionlibro = eleccionlibroInput.value;
+
+                fetch('/libro/editar', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        'eleccionlibro': eleccionlibro
+                    }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(function (response) {
+                    console.log('response : ', response);
+                    return response.json();
+                }).then(function(responseJson){
+                    console.log('responseJson = ', responseJson);
+                    //mostrar el form oculto
+                    document.getElementById('form_edit').style='';
+
+                    //asignar valores al form
+                    document.getElementById('nombre_libro').value = responseJson[0][0];;
+                    document.getElementById('libro_editar').value = responseJson[0][0];;
+                    
+                    document.getElementById('editorial').value = responseJson[0][3];;
+                    document.getElementById('año_publicacion').value = responseJson[0][2];;
+                    document.getElementById('nro_paginas').value = responseJson[0][4];;
+                    document.getElementById('sinopsis').value = responseJson[0][6];;
+                    document.getElementById('imagen').value = responseJson[0][7];;
+                    
+
+                }).catch(function() {
+                    document.getElementById('form_edit').style='';
+                });
+            };
+
+
+
+
+
+
+
+
+
+
+
+
+
+            const nombre_libroInput = document.getElementById('nombre_libro');
+            const autorInput = document.getElementById('autor');
+            const editorialInput = document.getElementById('editorial');
+            const año_publicacionInput = document.getElementById('año_publicacion');
+            const nro_paginasInput = document.getElementById('nro_paginas');
+            const generoInput = document.getElementById('genero');
+            const sinopsisInput = document.getElementById('sinopsis');
+            const imagenInput = document.getElementById('imagen');
+
+            document.getElementById('edtar_libro').onclick = function(l){
+                l.preventDefault();
+                const nombre_libro = nombre_libroInput.value;
+                const autor = autorInput.value;
+                const editorial = editorialInput.value;
+                const año_publicacion = año_publicacionInput.value;
+                const nro_paginas = nro_paginasInput.value;
+                const genero = generoInput.value;
+                const sinopsis = sinopsisInput.value;
+                const imagen = imagenInput.value;
+                const libro_editar = eleccionlibroInput.value;
+                fetch('/libro/editar/final', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        'libro_editar': libro_editar,
+                        'nombre_libro': nombre_libro,
+                        'autor': autor,
+                        'editorial': editorial,
+                        'año_publicacion': año_publicacion,
+                        'nro_paginas': nro_paginas,
+                        'genero': genero,
+                        'sinopsis': sinopsis,
+                        'imagen': imagen
+                    }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(function (response) {
+                    console.log('response : ', response);
+                    return response.json();
+                }).then(function(responseJson){
+                    console.log('responseJson = ', responseJson);
+                    location.reload();
+
+                }).catch(function() {
+                    
+                });
+            };
+        </script>
+    </body>
+</hmtl>
